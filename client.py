@@ -3,13 +3,16 @@ import socketio
 #Socket
 socket = socketio.Client()
 
+#Tournament ID
+tournament_id = 1000
+
 #conection
 @socket.on('connect')
 def on_connect():
 	socket.emit('signin',
 		{
-			'user_name': 'maaarcosg_',
-        	'tournament_id': 142857,
+			'user_name': 'Sergio Juan Marcos Gutierrez Romero',
+        	'tournament_id': tournament_id,
         	'user_role': 'player'
 		}
 	)
@@ -32,7 +35,7 @@ def on_ok_signin():
 def on_ready(data):
 	socket.emit('play', 
 		{	
-			'tournament_id': 142857,
+			'tournament_id': tournament_id,
 			'player_turn_id': data['player_turn_id'],
 			'game_id': data['game_id'],
 			#movement: ?
@@ -52,4 +55,5 @@ def finish(data):
 
 
 # connect to server
-socket.connect('http://localhost:4000')
+#socket.connect('http://localhost:4000')
+socket.connect('http://3.12.129.126:4000')
