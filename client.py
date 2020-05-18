@@ -4,7 +4,7 @@ import socketio
 socket = socketio.Client()
 
 #Tournament ID
-tournament_id = 1000
+tournament_id = 142857
 
 #conection
 @socket.on('connect')
@@ -38,7 +38,7 @@ def on_ready(data):
 			'tournament_id': tournament_id,
 			'player_turn_id': data['player_turn_id'],
 			'game_id': data['game_id'],
-			#movement: ?
+			"movement": [random.randint(0,1),random.randint(0,29)]
         }
     )
 
@@ -55,5 +55,5 @@ def finish(data):
 
 
 # connect to server
-#socket.connect('http://localhost:4000')
-socket.connect('http://3.12.129.126:4000')
+socket.connect('http://localhost:4000')
+#socket.connect('http://3.12.129.126:4000')
