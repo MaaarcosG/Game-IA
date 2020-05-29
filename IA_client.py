@@ -62,12 +62,13 @@ def on_ready(data):
 def finish(data): 
 
 	print('Game', data['game_id'], 'has finished')
-
+	
 	#Message that you won
 	if data['player_turn_id'] == data['winner_turn_id']:
-		print('Congratulation! You Won: ', user.user_name, 'ID', data['player_turn_id'])
+		print('Congratulation! You Won: ', user.user_name)
+
 	else:
-		print('Sorry, you lost, player: ', user.user_name, 'ID', data['player_turn_id'])
+		print('Sorry, you lost, player: ', user.user_name)
 
 	socket.emit('player_ready', 
 		{
