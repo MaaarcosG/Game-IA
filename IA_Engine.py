@@ -1,12 +1,13 @@
 from Totito import Player
 from Totito import Orientation
 from Totito import Totito
+import math
 
 class MiniMax:
 
 	def __init__(self):
-		self.initial_alpha = -1000000
-		self.initial_beta = 1000000
+		self.initial_alpha = -math.inf
+		self.initial_beta = math.inf
 		self.maximizing_player = Player.PLAYER_ONE
 		self.max_depth = 3
 	
@@ -21,7 +22,7 @@ class MiniMax:
 		return next_move
 	
 	def _get_minimax_move(self, posible_moves):
-		best_score = -1000000
+		best_score = -math.inf
 		best_move = posible_moves[0]
 
 		for move in posible_moves:
@@ -35,7 +36,6 @@ class MiniMax:
 		
 		return best_move
 
-
 	def minimax(self, game: Totito, is_maximizing, depth, alpha, beta):
 		if game.is_game_over() or depth == self.max_depth:
 			score = game.get_current_score()
@@ -48,20 +48,24 @@ class MiniMax:
 	def _min(self, game: Totito, depth, alpha, beta):
 		for move in self._posible_moves_index(game.empty_lines()):
 			game.draw_line(move[1], move[0], self._get_opponent(self.maximizing_player))
-			score = self.minimax(game, True, depth + 1, alpha, beta)
+			score = self.minimax(game, True, depth - 1, alpha, beta)
+			#score = self.minimax(game, True, depth + 1, alpha, beta)
 			self.game.empty_line(move[1], move[0])
 			beta = min(beta, score)
-			if(alpha >= beta):
+			#(alpha >= beta)
+			if(alpha <= beta):
 				break
 		return beta
 
 	def _max(self, game: Totito, depth, alpha, beta):
 		for move in self._posible_moves_index(game.empty_lines()):
 			game.draw_line(move[1], move[0], self.maximizing_player)
-			score = self.minimax(game, False, depth + 1, alpha, beta)
+			score = self.minimax(game, False, depth - 1, alpha, beta)
+			#score = self.minimax(game, False, depth + 1, alpha, beta)
 			self.game.empty_line(move[1], move[0])
 			alpha = max(alpha, score)
-			if(alpha >= beta):
+			#alpha >= beta
+			if(alpha <= beta):
 				break
 		return alpha
 
